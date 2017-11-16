@@ -63,7 +63,11 @@ namespace BethanysPieShop
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPieReviewRepository, PieReviewRepository>();
-            services.AddScoped<IAuthorizationHandler, MinimumOrderAgeRequirementHandler>();
+
+            
+            services.AddScoped<IAuthorizationHandler, MinimumOrderAgeAppUserRequirementHandler>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
 
             //specify options for the anti forgery here
             // https://github.com/aspnet/Announcements/issues/257
@@ -102,6 +106,7 @@ namespace BethanysPieShop
             // Session state is stored in memory (which may cause scalability problems when running in web-farms)
             // for more info to use Redis or SQL Server as session store:
             // Introduction to session and application state in ASP.NET Core
+          
             // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?tabs=aspnetcore2x
 
             services.AddMemoryCache();
